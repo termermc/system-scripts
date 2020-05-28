@@ -2,8 +2,9 @@
 
 # Config
 VPNIP='45.79.219.87'
+VPNIPv6='2600:3c02::f03c:91ff:fe1c:eca1'
 
-echo "This script will setup a firewall via UFW that will block all traffic that isn't being routed through OpenVPN. To disable, type \"sudo ufw disable\". Continue? [y/n]"
+echo "This script will setup a firewall via UFW that will block all traffic that isn't being routed through OpenVPN or LAN. To disable, type \"sudo ufw disable\". Continue? [y/n]"
 
 read yn
 if [ $yn != 'y' ]; then
@@ -42,6 +43,8 @@ sudo ufw allow out on wlp3s0 to 192.168.0.0/24
 # Allow all connections to and from $VPNIP
 sudo ufw allow out to "$VPNIP"
 sudo ufw allow in from "$VPNIP"
+sudo ufw allow out to "$VPNIPv6"
+sudo ufw allow in from "$VPNIPv6"
 
 # Enable and print status
 sudo ufw enable
